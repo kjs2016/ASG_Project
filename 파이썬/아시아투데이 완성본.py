@@ -49,6 +49,16 @@ driver.implicitly_wait(5)
 req = driver.page_source
 soup = BeautifulSoup(req, 'html.parser')
 
+#member = driver.find_elements(By.CLASS_NAME, 'news_list_df')
+#member = driver.find_elements(By.TAG_NAME, 'dd')[1]
+#member = driver.find_elements(By.TAG_NAME,'a')
+
+link_text_array = []#텍스트 형태로 저장할 배열 선언
+for name in member:#저장
+    link_text_array.append(name.text)
+
+print(link_text_array)#텍스트 배열 출력
+
 driver.find_element(By.XPATH,'//*[@id="section_main"]/div[2]/dl/dd[1]/a').click()
 driver.implicitly_wait(5)
 driver.find_element(By.XPATH,'//*[@id="section_top"]/div/dl/dd/ul/li[8]/a').send_keys(Keys.ENTER)
