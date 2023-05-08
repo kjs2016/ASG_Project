@@ -1,4 +1,4 @@
-import 아시아투데이, 충청신문, 온아신문, 온양신문, 아산투데이
+import 아시아투데이, 충청신문, 온아신문, 온양신문, 아산투데이, 아산시사신문, 온주신문, C뉴스041, 뉴스세상, 로컬투데이
 from tqdm import tqdm
 import time
 
@@ -11,7 +11,8 @@ while True:
  else:
    break
  
-func_list = [아시아투데이.asiatoday0, 충청신문.cc1, 온아신문.onanews2, 온양신문.ionyang3, 아산투데이.asnatoday4]#각 모듈의 함수명 저장
+func_list = [아시아투데이.asiatoday0, 충청신문.cc1, 온아신문.onanews2, 온양신문.ionyang3, 아산투데이.asnatoday4, 아산시사신문.asansisa5,
+             온주신문.onjoo6, C뉴스041.cnews041_7, 뉴스세상.newssesang8, 로컬투데이.localtoday9]#각 모듈의 함수명 저장
 
 num_of_functions = len(func_list)#배열의 길이 저장
 
