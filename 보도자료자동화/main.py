@@ -1,5 +1,5 @@
 import 아시아투데이, 충청신문, 온아신문, 온양신문, 아산투데이, 아산시사신문, 온주신문, C뉴스041, 뉴스세상, 로컬투데이, 아산포커스, 충청투데이
-import 대전투데이, 충청매일, 충청일보, 동양일보, 충청타임즈, 금강일보, 충남신문, 디트뉴스
+import 대전투데이, 충청매일, 충청일보, 동양일보, 충청타임즈, 금강일보, 충남신문, 디트뉴스, 천지일보
 from tqdm import tqdm
 import time
 import sys
@@ -13,9 +13,10 @@ while True:
  else:
    break
  
-func_list = [디트뉴스.dtnews24_19,충청타임즈.cctimes16,아시아투데이.asiatoday0, 충청신문.cc1, 온아신문.onanews2, 온양신문.ionyang3, 아산투데이.asnatoday4, 아산시사신문.asansisa5,
+func_list = [천지일보.newscj20, 충청타임즈.cctimes16,아시아투데이.asiatoday0, 충청신문.cc1, 온아신문.onanews2, 온양신문.ionyang3, 아산투데이.asnatoday4, 아산시사신문.asansisa5,
              온주신문.onjoo6, C뉴스041.cnews041_7, 뉴스세상.newssesang8, 로컬투데이.localtoday9, 아산포커스.asanfocus10,
-             충청투데이.cctoday11, 대전투데이.daejeontoday12, 충청매일.ccdn13, 충청일보.ccdailynews14, 동양일보.dynews15, 충청타임즈.cctimes16, 금강일보.ggilbo17, 충남신문.ccsimin18, 디트뉴스.dtnews24_19]#각 모듈의 함수명 저장
+             충청투데이.cctoday11, 대전투데이.daejeontoday12, 충청매일.ccdn13, 충청일보.ccdailynews14, 동양일보.dynews15, 충청타임즈.cctimes16, 금강일보.ggilbo17, 충남신문.ccsimin18, 디트뉴스.dtnews24_19
+             , 천지일보.newscj20]#각 모듈의 함수명 저장
 
 num_of_functions = len(func_list)#배열의 길이 저장
 
