@@ -37,7 +37,7 @@ def startThread(point):
     thread = threading.Thread(target=start_scrap, args=(point))
     thread.daemon = True
     thread.start()
-   
+
 
 def show_warning():
    messagebox.showwarning("경고", "값을 입력하지 않았습니다. 다시 입력해주세요")
@@ -51,6 +51,7 @@ def on_button_click():
     if not point:
       show_warning()
     else:
+      label.config(text="스크랩이 수행중입니다~")
       entry.delete(0, tk.END)
       #배열에 들어있는 뉴스기사를 순차적으로 실행
       thread = threading.Thread(target=start_scrap, args=(point,))
@@ -72,7 +73,12 @@ def on_button_click():
                print(f"{i}번째 함수 실행 중 오류가 발생했습니다 : {e}")
       else:
          print("오류가 발생하지 않았습니다.") 
-         
+
+
+#엔터를 누르면 스크랩이 수행되는 부분
+def enter_pressed(event):
+    on_button_click()
+            
 
     #print("입력된 단어:", input_text)
 if __name__ == "__main__":
@@ -92,6 +98,8 @@ if __name__ == "__main__":
    exit_button = tk.Button(root, text="종료", command=on_close,  font=("Arial", 15), bg='#f05650')
    exit_button.pack(side=tk.LEFT, padx=60)
 
+   root.bind('<Return>', enter_pressed)
+
    root.mainloop()
 
 
@@ -100,4 +108,3 @@ def ErrorLog(error: str):
     current_time = time.strftime("%Y.%m.%d/%H:%M:%S", time.localtime(time.time()))
     with open("Log.txt", "a") as f:
         f.write(f"[{current_time}] - {error}\n")
-
