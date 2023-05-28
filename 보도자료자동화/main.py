@@ -20,6 +20,12 @@ func_list = [아시아투데이.asiatoday0, 충청신문.cc1, 온아신문.onane
              충남in.chungnamin40, 중부매일.jbnews41, IPTV뉴스.iptvnews42]#각 모듈의 함수명 저장
 point =""
 
+
+def ErrorLog(error: str):
+    current_time = time.strftime("%Y.%m.%d/%H:%M:%S", time.localtime(time.time()))
+    with open("Log.txt", "a") as f:
+        f.write(f"[{current_time}] - {error}\n")
+
 num_of_functions = len(func_list)#배열의 길이 저장
 
 def start_scrap(point):
@@ -28,15 +34,12 @@ def start_scrap(point):
       try:
          func_list[i](word)  # 배열에 있는 함수를 호출
          time.sleep(0.5)  # 로딩바 속도를 조절하기 위한 지연 시간
+         pb["value"] = i
+         pb.update()
       except Exception as e:
          errors.append((i, e))
          err = traceback.format_exc()
          ErrorLog(str(err))
-
-def startThread(point):
-    thread = threading.Thread(target=start_scrap, args=(point))
-    thread.daemon = True
-    thread.start()
 
 
 def show_warning():
@@ -51,7 +54,8 @@ def on_button_click():
     if not point:
       show_warning()
     else:
-      label.config(text="스크랩이 수행중입니다~")
+      label.config(text="스크랩이 진행중입니다")
+      button.config(text='실행중')
       entry.delete(0, tk.END)
       #배열에 들어있는 뉴스기사를 순차적으로 실행
       thread = threading.Thread(target=start_scrap, args=(point,))
@@ -85,6 +89,17 @@ if __name__ == "__main__":
    root = tk.Tk()
 
    root.title('ANS')
+  
+   image = tk.PhotoImage(file="C:/Users/eksld/Desktop/Asg_Project/ASG_Project-2/보도자료자동화/아산시시설관리공단1.png")
+   # 이미지 삽입
+   label1 = tk.Label(image=image)
+   #label1.grid(row=0, column=0, padx=30,pady=10)
+   label1.pack()
+    
+   # Progress Bar 생성
+   pb = tkinter.ttk.Progressbar(root, maximum=num_of_functions-1, length = 300)
+   pb.pack()
+    
 
    label = tk.Label(root, text="핵심단어를 입력하세요!", font=("Arial", 20))
    label.pack()
@@ -101,10 +116,3 @@ if __name__ == "__main__":
    root.bind('<Return>', enter_pressed)
 
    root.mainloop()
-
-
-
-def ErrorLog(error: str):
-    current_time = time.strftime("%Y.%m.%d/%H:%M:%S", time.localtime(time.time()))
-    with open("Log.txt", "a") as f:
-        f.write(f"[{current_time}] - {error}\n")
