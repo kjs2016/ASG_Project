@@ -21,6 +21,7 @@ func_list = [아시아투데이.asiatoday0, 충청신문.cc1, 온아신문.onane
              내일신문.naeil34, 아산in.asanin35, 배방신문.baebang36, 농수축산신문.aflnews37, 뉴스타운.newstown38, 굿모닝충청.goodmorningcc39,
              충남in.chungnamin40, 중부매일.jbnews41, IPTV뉴스.iptvnews42]#각 모듈의 함수명 저장
 point =""
+file_name=""
 
 
 def ErrorLog(error: str):
@@ -68,6 +69,7 @@ def on_close():
 #확인 버튼을 누르면 함수가 실행된다.
 def on_button_click():
     point = entry.get()
+    file_name = entry_file.get()
     if not point:
       show_warning()
     else:
@@ -96,12 +98,39 @@ def on_button_click():
 def enter_pressed(event):
     on_button_click()
             
+#------------유의사항 창-----------#
+def new_window():
+   add_window = tk.Toplevel(root)
+   #add_window.geometry("700x150")
+   add_window.title("유의사항")
 
+   label = tk.Label(add_window, text="1. 핵심단어는 띄어쓰기 x", font=("맑은 고딕", '12'))
+   label.pack(padx=20, pady=30)
+
+   label = tk.Label(add_window, text="2. 핵심단어는 기사 제목에 반드시 포함되고 다른 기사제목과 중복되지 않는걸로 입력", font=("맑은 고딕",'12'))
+   label.pack(padx=20)
+   label = tk.Label(add_window, text=" *피해야 될 단어 예시 : 아산시시설관리공단, 영인산박물관, 곤충원 등등", font=("맑은 고딕",'12'))
+   label.pack(padx=20)
+
+   label = tk.Label(add_window, text="3. 실행도중에 종료하면 생성된 pdf 파일을 전부 제거후 다시 실행", font=("맑은 고딕",'12'))
+   label.pack(padx=20, pady=30)
+#----------------------------------------#
     #print("입력된 단어:", input_text)
 if __name__ == "__main__":
    root = tk.Tk()
 
    root.title('ANS')
+  
+   # Menu 생성
+   menubar = tk.Menu(root)
+
+   # 일반 메뉴 콘텐츠 작성
+   helpmenu = tk.Menu(menubar, tearoff=0)
+   helpmenu.add_command(label="유의사항", command=new_window)
+   helpmenu.add_command(label="정보", command=None)
+   menubar.add_cascade(label="메뉴", menu=helpmenu)
+
+   root.config(menu=menubar)
   
    image = tk.PhotoImage(file="C:/Users/eksld/Desktop/Asg_Project/ASG_Project-2/보도자료자동화/아산시시설관리공단1.png")
    # 이미지 삽입
@@ -119,6 +148,16 @@ if __name__ == "__main__":
 
    entry = tk.Entry(root, font=("Arial", 20))
    entry.pack()
+    
+   #-----------------파일명 입력받는 곳--------------------------#
+   label3 = tk.Label(root, text="파일명을 입력하세요!", font=("Arial", 20))
+   #label2.grid(row=1, column=0, padx=30,pady=10)
+   label3.pack()
+
+   entry_file = tk.Entry(root, font=("Arial", 20))
+   #entry.grid(row=2, column=0, padx=5,pady=10)
+   entry_file.pack()
+   #------------------------------------------------------------#
 
    button = tk.Button(root, text="확인", command=on_button_click, font=("Arial", 15), bg='#4aa8d8')
    button.pack(side=tk.LEFT, padx=50)
