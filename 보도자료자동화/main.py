@@ -11,6 +11,8 @@ from tkinter import messagebox
 import threading
 
 errors = []
+sum = 0
+
 func_list = [아시아투데이.asiatoday0, 충청신문.cc1, 온아신문.onanews2, 온양신문.ionyang3, 아산투데이.asnatoday4, 아산시사신문.asansisa5,
              온주신문.onjoo6, C뉴스041.cnews041_7, 뉴스세상.newssesang8, 로컬투데이.localtoday9, 아산포커스.asanfocus10,
              충청투데이.cctoday11, 대전투데이.daejeontoday12, 충청매일.ccdn13, 충청일보.ccdailynews14, 동양일보.dynews15, 충청타임즈.cctimes16, 금강일보.ggilbo17, 충남신문.ccsimin18, 디트뉴스.dtnews24_19
@@ -29,6 +31,7 @@ def ErrorLog(error: str):
 num_of_functions = len(func_list)#배열의 길이 저장
 
 def start_scrap(point):
+  global sum
    word = point
    for i in tqdm(range(num_of_functions), file=sys.stdout):
       try:
@@ -36,6 +39,19 @@ def start_scrap(point):
          time.sleep(0.5)  # 로딩바 속도를 조절하기 위한 지연 시간
          pb["value"] = i
          pb.update()
+         num = func_list[i](word)
+         sum = sum + num
+         if i >= num_of_functions-1:
+            label2.config(text="스크랩이 완료되었습니다")
+            button.config(text='확인')
+            button.configure(bg='#4aa8d8')
+            messagebox.showwarning("알림", f"{sum}개의 스크랩을 수행하였습니다")
+            if errors:
+               print("오류가 발생한 함수:")
+               for i, e in errors:
+                   print(f"{i}번째 함수 실행 중 오류가 발생했습니다 : {e}")
+            else:
+               print("오류가 발생하지 않았습니다.") 
       except Exception as e:
          errors.append((i, e))
          err = traceback.format_exc()
@@ -43,11 +59,12 @@ def start_scrap(point):
 
 
 def show_warning():
-   messagebox.showwarning("경고", "값을 입력하지 않았습니다. 다시 입력해주세요")
+   messagebox.showwarning("경고", "값을 입력하지 않았습니다. 값을 입력해주세요")
 
 def on_close():
     if messagebox.askokcancel("확인", "프로그램을 종료하시겠습니까?"):
         root.destroy()   
+        
 #확인 버튼을 누르면 함수가 실행된다.
 def on_button_click():
     point = entry.get()
@@ -55,7 +72,8 @@ def on_button_click():
       show_warning()
     else:
       label.config(text="스크랩이 진행중입니다")
-      button.config(text='실행중')
+      button.config(text='진행중')
+      button.configure(bg='#A0D468')
       entry.delete(0, tk.END)
       #배열에 들어있는 뉴스기사를 순차적으로 실행
       thread = threading.Thread(target=start_scrap, args=(point,))
@@ -71,12 +89,7 @@ def on_button_click():
             #errors.append((i, e))
             ##err = traceback.format_exc()
             #ErrorLog(str(err))
-      if errors:
-            print("오류가 발생한 함수:")
-            for i, e in errors:
-               print(f"{i}번째 함수 실행 중 오류가 발생했습니다 : {e}")
-      else:
-         print("오류가 발생하지 않았습니다.") 
+      
 
 
 #엔터를 누르면 스크랩이 수행되는 부분
