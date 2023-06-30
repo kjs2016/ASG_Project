@@ -1,0 +1,6 @@
+pip install selenium
+pip install bs4
+pip install webdriver_manager
+pip install pyautogui
+pip install pyperclip
+pip install webdriver_manager
